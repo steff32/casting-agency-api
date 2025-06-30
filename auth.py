@@ -1,3 +1,4 @@
+import os
 import json
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
@@ -5,9 +6,9 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'dev-tcmculz33ufggfvb.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'agency'
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
+ALGORITHMS = [os.environ.get('ALGORITHMS', 'RS256')]
 
 ## AuthError Exception
 '''
@@ -21,16 +22,6 @@ class AuthError(Exception):
 
 
 ## Auth Header
-
-'''
-@TODO implement get_token_auth_header() method
-    it should attempt to get the header from the request
-        it should raise an AuthError if no header is present
-    it should attempt to split bearer and the token
-        it should raise an AuthError if the header is malformed
-    return the token part of the header
-'''
-
 
 def get_token_auth_header():
     auth_header = request.headers.get('Authorization', None)
@@ -74,19 +65,7 @@ def check_permissions(permission, payload):
             'description': 'Permission not found.'
         }, 403)
     return True
-'''
-@TODO implement verify_decode_jwt(token) method
-    @INPUTS
-        token: a json web token (string)
 
-    it should be an Auth0 token with key id (kid)
-    it should verify the token using Auth0 /.well-known/jwks.json
-    it should decode the payload from the token
-    it should validate the claims
-    return the decoded payload
-
-    !!NOTE urlopen has a common certificate error described here: https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
-'''
 
 def verify_decode_jwt(token):
     url = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')

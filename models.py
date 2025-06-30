@@ -34,7 +34,26 @@ def db_drop_and_create_all():
     actor.insert()
 
 
-class Movie(db.Model):
+'''
+Extend the base Model class to add common methods
+'''
+class inheritedClassName(db.Model) :
+    __abstract__ = True
+    def insert(self):
+        db.session.add(self)
+        db.session. commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+'''
+Movie
+'''
+class Movie(inheritedClassName):
     __tablename__ = 'movies'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -56,7 +75,10 @@ class Movie(db.Model):
         return {"id": self.id, "title": self.title, "release_date": self.release_date.isoformat()}
 
 
-class Actor(db.Model):
+'''
+Actor
+'''
+class Actor(inheritedClassName):
     __tablename__ = 'actors'
 
     id = db.Column(db.Integer, primary_key=True)

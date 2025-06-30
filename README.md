@@ -51,31 +51,32 @@ source venv/bin/activate # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 ### 4. Configure Environment Variables
+This project uses a shell script, `setup.sh`, to set all required environment variables. Change the variables' values as required.
 
-Create a `.env` file or set these variables in your shell:
+**To set up your environment variables, run:**
 
-DATABASE_URL=postgresql://username:password@localhost:5432/your_database
-AUTH0_DOMAIN=dev-xxxxxx.us.auth0.com
-API_AUDIENCE=agency
-ALGORITHMS=RS256
+source setup.sh
+
+This will export all necessary variables for your Flask app, including database and Auth0 configuration.
 
 
 ### 5. Database Setup
 
 Create your PostgreSQL database and initialize tables (for local testing)
 
-In Python shell or as a script
+In Python shell or as a script:
 from models import db_drop_and_create_all
 db_drop_and_create_all()
 
 
 ### 6. Run the Development Server
 
+After running `source setup.sh`, start the Flask app:
 export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 
-The API will be available at `http://localhost:8080/`.
+The API will be available at `http://localhost:8080/` if running locally.
 
 ---
 
@@ -130,7 +131,6 @@ Authorization: Bearer <JWT_TOKEN>
 **Get Movies**
 curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:8080/movies
 
-text
 
 **Add Actor**
 curl -X POST -H "Authorization: Bearer <EXEC_PRODUCER_TOKEN>"
@@ -138,7 +138,6 @@ curl -X POST -H "Authorization: Bearer <EXEC_PRODUCER_TOKEN>"
 -d '{"name": "Jane Doe", "age": 30, "gender": "Female"}'
 http://localhost:8080/actors
 
-text
 
 ---
 
@@ -146,26 +145,6 @@ text
 
 python -m unittest test_app.py
 
-text
 or, if using pytest:
 pytest test_app.py
 
-text
-
----
-
-## Further Reading
-
-- [Auth0 Role-Based Access Control for Flask](https://developer.auth0.com/resources/code-samples/api/flask/basic-role-based-access-control)
-- [Flask Documentation](https://flask.palletsprojects.com/)
-- [Flask-SQLAlchemy Documentation](https://flask-sqlalchemy.palletsprojects.com/)
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
----
-
-**Replace placeholders (like URLs and Auth0 domain) with your actual values before deployment.**
