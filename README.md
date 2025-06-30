@@ -16,8 +16,7 @@ Film production companies need secure, scalable tools to manage their creative d
 ## Hosted API
 
 **Production URL:**  
-`https://your-production-domain.com`  
-*(Replace with your actual deployed API URL)*
+`https://casting-agency-api-pnv9.onrender.com`  
 
 ---
 
@@ -76,7 +75,7 @@ export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 
-The API will be available at `http://localhost:8000/`.
+The API will be available at `http://localhost:8080/`.
 
 ---
 
@@ -129,7 +128,7 @@ Authorization: Bearer <JWT_TOKEN>
 ## Example Requests
 
 **Get Movies**
-curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:8000/movies
+curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:8080/movies
 
 text
 
@@ -137,7 +136,7 @@ text
 curl -X POST -H "Authorization: Bearer <EXEC_PRODUCER_TOKEN>"
 -H "Content-Type: application/json"
 -d '{"name": "Jane Doe", "age": 30, "gender": "Female"}'
-http://localhost:8000/actors
+http://localhost:8080/actors
 
 text
 
