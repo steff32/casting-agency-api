@@ -1,18 +1,21 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+import os
 
 #----------------------------------------------------------------------------#
 # Models.
 #----------------------------------------------------------------------------#
 
 db = SQLAlchemy()
+database_path = os.getenv('DATABASE_URL', 'postgresql://stefani.genkova@localhost:5432/casting_agency')
 
 
 def setup_db(app):
-    app.config.from_object('config')
-    db.app = app
-    db.init_app(app)
+    with app.app_context():
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+        app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        db.app = app
+        db.init_app(app)
+        db.create_all()
 
 
 def db_drop_and_create_all():
