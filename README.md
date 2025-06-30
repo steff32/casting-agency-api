@@ -76,7 +76,7 @@ export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 
-The API will be available at `http://localhost:8080/` if running locally.
+The API will be available at `http://localhost:5000/` if running locally.
 
 ---
 
@@ -129,14 +129,14 @@ Authorization: Bearer <JWT_TOKEN>
 ## Example Requests
 
 **Get Movies**
-curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:8080/movies
+curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:5000/movies
 
 
 **Add Actor**
 curl -X POST -H "Authorization: Bearer <EXEC_PRODUCER_TOKEN>"
 -H "Content-Type: application/json"
 -d '{"name": "Jane Doe", "age": 30, "gender": "Female"}'
-http://localhost:8080/actors
+http://localhost:5000/actors
 
 
 ---
